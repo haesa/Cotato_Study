@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <div id="root"></div>
+</body>
+<script crossorigin src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+  // 컴포넌트는 JSX를 반환하는 함수로 이해하면 됨.
+  // props는 컴포넌트에 데이터를 전달해주는 변수이지, html 요소에 달리는 속성이 아니다.  
+  function Btn({ value, changeValue, fontSize = 12 }) {
+    console.log(value, "was rendered");
+    return (
+      <button 
+        onClick={changeValue}
+        style={{
+          backgroundColor: 'tomato',
+          color: 'white',
+          padding: '10px 20px',
+          border: 0,
+          borderRadius: 10,
+          fontSize,
+        }}
+      >
+        {value}
+      </button>);
+  }
+
+  Btn.propTypes = {
+    value: PropTypes.string.isRequired,
+    fontSize: PropTypes.number,
+  }
+
+  function App() {
+    const [value, setValue] = React.useState("Save Changes");
+    const changeValue = () => setValue("Revert Change");
+    return (
+      <div>
+        <Btn value={value} fontSize={18}/>
+        <Btn value="Confirm" />
+      </div>
+    );
+  }
+  const root = document.querySelector('#root');
+  ReactDOM.render(<App />, root);
+</script>
+
+</html>
